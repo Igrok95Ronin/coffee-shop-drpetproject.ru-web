@@ -1,0 +1,24 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Например, какие-то глобальные стили */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+form label {
+  margin-bottom: 8px;
+}
+
+button {
+  margin-top: 10px;
+}
