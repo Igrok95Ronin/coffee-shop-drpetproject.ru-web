@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import "../index.css"; // Подключаем стили
 
 // Вспомогательная функция для форматирования номера
 function formatPhoneNumber(phone) {
@@ -114,9 +113,7 @@ function Register() {
 
   // Текст кнопки отправки СМС (меняется при блокировке)
   const renderSmsButtonText = () => {
-    return isSmsDisabled
-      ? `Повторно через ${timeLeft} c`
-      : "Отправить SMS";
+    return isSmsDisabled ? `Повторно через ${timeLeft} c` : "Отправить SMS";
   };
 
   return (
@@ -132,11 +129,7 @@ function Register() {
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
-        <button
-          className="register-button"
-          type="submit"
-          disabled={isSmsDisabled}
-        >
+        <button className="register-button" type="submit" disabled={isSmsDisabled}>
           {renderSmsButtonText()}
         </button>
       </form>
