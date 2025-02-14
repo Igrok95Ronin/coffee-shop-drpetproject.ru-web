@@ -1,26 +1,24 @@
-// src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-// Функция для форматирования номера, аналогичная предыдущему примеру
-function formatPhoneNumber(phone) {
-  let cleaned = phone.trim();
-  if (cleaned.startsWith("+")) {
-    cleaned = cleaned.slice(1);
-  }
-  if (cleaned.startsWith("8")) {
-    cleaned = "7" + cleaned.slice(1);
-  }
-  return cleaned;
-}
-
 function Login({ setIsAuth }) {
   const navigate = useNavigate();
-
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Функция для форматирования номера, аналогичная предыдущему примеру
+  function formatPhoneNumber(phone) {
+    let cleaned = phone.trim();
+    if (cleaned.startsWith("+")) {
+      cleaned = cleaned.slice(1);
+    }
+    if (cleaned.startsWith("8")) {
+      cleaned = "7" + cleaned.slice(1);
+    }
+    return cleaned;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,23 +68,27 @@ function Login({ setIsAuth }) {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Вход</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Номер телефона ( 79630581031 ):</label>
-          <br />
-          <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-        </div>
-        <div>
-          <label>Пароль:</label>
-          <br />
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
+        <label>Номер телефона ( 79630581031 ):</label>
+        <input
+          type="text"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+
+        <label>Пароль:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
         <button type="submit">Войти</button>
       </form>
 
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 }

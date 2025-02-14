@@ -22,3 +22,127 @@ form label {
 button {
   margin-top: 10px;
 }
+
+
+/* Общие стили для формы */
+.register-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.register-container h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Поля ввода */
+.register-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.register-container input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Кнопки */
+.register-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-container button:hover {
+  background: #0056b3;
+}
+
+.register-container button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Сообщение об ошибке */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Примерный файл Login.css */
+
+/* Обёртка формы */
+.login-container {
+  width: 400px;
+  max-width: 90%;
+  margin: 40px auto; /* Выравнивание по центру */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-container form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.login-container form input[type="text"],
+.login-container form input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box; /* Чтобы учитывалась ширина бордюров при расчёте ширины */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-container form button[type="submit"] {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50; /* Зеленая кнопка */
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-container form button[type="submit"]:hover {
+  background-color: #45a049; /* Темнее при наведении */
+}
+
+.login-container .error-message {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+}
