@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import { Footer } from "./components/Footer/Footer";
 
 import Home from "./pages/Home";
 import Sale from "./pages/Sale";
@@ -19,6 +20,8 @@ import ProtectedTwo from "./pages/ProtectedTwo";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import api from "./api";
+
+import "./App.scss";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -40,43 +43,47 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
-      {/* Передаём isAuth и setIsAuth в NavBar, чтобы там менять кнопки */}
-      <NavBar isAuth={isAuth} setIsAuth={setIsAuth} />
+    <>
+      <BrowserRouter>
+        {/* Передаём isAuth и setIsAuth в NavBar, чтобы там менять кнопки */}
+        <NavBar isAuth={isAuth} setIsAuth={setIsAuth} />
+        <main className="main">
+          <Routes>
+            {/* Главная страница */}
+            <Route path="/" element={<Home />} />
+            <Route path="/sale" element={<Sale />} />
+            <Route path="/company" element={<Company />} />
+            <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/Points" element={<Points />} />
+            <Route path="/Search" element={<Search />} />
 
-      <Routes>
-        {/* Главная страница */}
-        <Route path="/" element={<Home />} />
-        <Route path="/sale" element={<Sale />} />
-        <Route path="/company" element={<Company />} />
-        <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/Points" element={<Points />} />
-        <Route path="/Search" element={<Search />} />
+            {/* Регистрация и Логин */}
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
 
-        {/* Регистрация и Логин */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-
-        {/* Защищённые страницы */}
-        <Route
-          path="/protected1"
-          element={
-            <ProtectedRoute setIsAuth={setIsAuth}>
-              <ProtectedOne />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/protected2"
-          element={
-            <ProtectedRoute setIsAuth={setIsAuth}>
-              <ProtectedTwo />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+            {/* Защищённые страницы */}
+            <Route
+              path="/protected1"
+              element={
+                <ProtectedRoute setIsAuth={setIsAuth}>
+                  <ProtectedOne />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/protected2"
+              element={
+                <ProtectedRoute setIsAuth={setIsAuth}>
+                  <ProtectedTwo />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </main>
+      </BrowserRouter>
+      <Footer />
+    </>
   );
 }
 
