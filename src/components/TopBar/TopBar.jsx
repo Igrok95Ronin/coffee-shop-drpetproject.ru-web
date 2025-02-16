@@ -13,10 +13,18 @@ import {
   ListItemText,
   Badge,
 } from "@mui/material";
-import { Menu as MenuIcon, Search as SearchIcon, ShoppingCart as ShoppingCartIcon } from "@mui/icons-material";
+import {
+  Menu as MenuIcon,
+  Search as SearchIcon,
+  ShoppingCart as ShoppingCartIcon,
+  LocalPhone as LocalPhoneIcon,
+  Email as EmailIcon,
+} from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../api";
+
+import "./TopBar.scss";
 
 // Стили для поиска
 const Search = styled("div")(({ theme }) => ({
@@ -85,14 +93,14 @@ const TopBar = ({ isAuth, setIsAuth }) => {
       {/* Верхняя панель */}
       <AppBar position="static" sx={{ padding: "8px 0" }}>
         <div className="container">
-          <Toolbar disableGutters sx={{ minHeight: 90, padding: 0 }}>
+          <Toolbar disableGutters sx={{ minHeight: "54px !important", padding: 0 }}>
             {/* ЛОГОТИП */}
             <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: "none", color: "inherit", mr: 2 }}>
               My App
             </Typography>
 
             {/* КНОПКА-ГАМБУРГЕР */}
-            <IconButton edge="start" color="inherit" sx={{ mr: 2 }} onClick={toggleDrawer(true)}>
+            <IconButton edge="start" color="inherit" sx={{ mr: 0 }} onClick={toggleDrawer(true)}>
               <MenuIcon />
             </IconButton>
 
@@ -110,19 +118,48 @@ const TopBar = ({ isAuth, setIsAuth }) => {
               />
             </Search>
 
+            {/* Контактные данные */}
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "5px", marginRight: "10px" }}>
+              {/* Телефон */}
+              <Typography variant="body1" sx={{ fontSize: "12px", fontWeight: "bold" }}>
+                <IconButton component="a" href="tel:+79659655989" sx={{ color: "white", padding: "0 10px 0 0" }}>
+                  <LocalPhoneIcon sx={{ fontSize: "16px" }} />
+                </IconButton>
+                <a href="tel:+79659655989" style={{ color: "white", textDecoration: "none" }}>
+                  8 965 965 59 89
+                </a>
+              </Typography>
+
+              {/* Email */}
+              <Typography variant="body1" sx={{ fontSize: "12px", fontWeight: "bold" }}>
+                <IconButton component="a" href="mailto:g2b@migcom.ru" sx={{ color: "white", padding: "0 10px 0 0" }}>
+                  <EmailIcon sx={{ fontSize: "16px" }} />
+                </IconButton>
+                <a href="mailto:g2b@migcom.ru" style={{ color: "white", textDecoration: "none" }}>
+                  g2b@migcom.ru
+                </a>
+              </Typography>
+            </Box>
+
             {/* Кнопки авторизации и корзина */}
-            <Box sx={{ display: "flex", alignItems: "center", ml: "auto" }}>
+            <Box sx={{ display: "flex", alignItems: "center", ml: "auto", padding: "0 0 0 10px" }}>
               {!isAuth ? (
-                <>
-                  <Button color="inherit" component={Link} to="/login">
-                    Login
+                <div className="topBarBtn__wrapper">
+                  <Button className="topBarBtn__exit" sx={{ padding: 0 }} color="inherit" component={Link} to="/login">
+                    Войти
                   </Button>
-                  <Button color="inherit" component={Link} to="/register">
-                    Register
+                  <Button
+                    className="topBarBtn__exit"
+                    sx={{ padding: 0 }}
+                    color="inherit"
+                    component={Link}
+                    to="/register"
+                  >
+                    Зарегистрироваться
                   </Button>
-                </>
+                </div>
               ) : (
-                <Button color="inherit" onClick={handleLogout}>
+                <Button className="topBarBtn__exit" color="inherit" onClick={handleLogout}>
                   Выход
                 </Button>
               )}
@@ -148,7 +185,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
         <List style={{ width: 250 }}>
           {/* Общие ссылки */}
           <ListItem component={Link} to="/">
-            <ListItemText primary="Home" />
+            <ListItemText primary="Главная" />
           </ListItem>
           <ListItem component={Link} to="/sale">
             <ListItemText primary="Акции" />
@@ -167,6 +204,12 @@ const TopBar = ({ isAuth, setIsAuth }) => {
           </ListItem>
           <ListItem component={Link} to="/search">
             <ListItemText primary="Поиск" />
+          </ListItem>
+          <ListItem component={Link} to="/basket" sx={{ mr: 3 }}>
+            <Badge badgeContent={3} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+            <ListItemText sx={{ ml: 3 }} primary="Корзина" />
           </ListItem>
 
           {/* Если user НЕ авторизован */}
@@ -189,7 +232,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
               </ListItem>
               <ListItem>
                 <Button variant="outlined" color="error" onClick={handleLogout} fullWidth>
-                  Exit
+                  Выход
                 </Button>
               </ListItem>
             </>

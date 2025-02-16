@@ -1,0 +1,12 @@
+// Стили для кнопок верхней панели
+.topBarBtn {
+  &__exit {
+    font-size: 10px !important;
+    font-weight: bold !important;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+  }
+  &__wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
