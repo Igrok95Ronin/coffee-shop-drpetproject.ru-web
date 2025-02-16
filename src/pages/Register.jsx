@@ -117,46 +117,48 @@ function Register() {
   };
 
   return (
-    <div className="register-container">
-      <h2 className="register-title">Регистрация</h2>
+    <div className="register__box">
+      <div className="register-container">
+        <h2 className="register-title">Регистрация</h2>
 
-      {/* Форма для отправки номера телефона и получения кода */}
-      <form className="register-form" onSubmit={handleSendSms}>
-        <input
-          className="register-input"
-          type="text"
-          placeholder="Номер телефона"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-        <button className="register-button" type="submit" disabled={isSmsDisabled}>
-          {renderSmsButtonText()}
-        </button>
-      </form>
+        {/* Форма для отправки номера телефона и получения кода */}
+        <form className="register-form" onSubmit={handleSendSms}>
+          <input
+            className="register-input"
+            type="text"
+            placeholder="Номер телефона"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+          <button className="register-button" type="submit" disabled={isSmsDisabled}>
+            {renderSmsButtonText()}
+          </button>
+        </form>
 
-      {/* Форма для ввода кода и пароля */}
-      <form className="register-form" onSubmit={handleRegister}>
-        <input
-          className="register-input"
-          type="text"
-          placeholder="Код подтверждения"
-          value={verificationCode}
-          onChange={(e) => setVerificationCode(e.target.value)}
-        />
-        <input
-          className="register-input"
-          type="password"
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="register-button" type="submit">
-          Зарегистрироваться
-        </button>
-      </form>
+        {/* Форма для ввода кода и пароля */}
+        <form className="register-form register-form-margin" onSubmit={handleRegister}>
+          <input
+            className="register-input"
+            type="text"
+            placeholder="Код подтверждения"
+            value={verificationCode}
+            onChange={(e) => setVerificationCode(e.target.value)}
+          />
+          <input
+            className="register-input"
+            type="password"
+            placeholder="Пароль"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="register-button" type="submit">
+            Зарегистрироваться
+          </button>
+        </form>
 
-      {/* Вывод ошибки, если она есть */}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {/* Вывод ошибки, если она есть */}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
     </div>
   );
 }

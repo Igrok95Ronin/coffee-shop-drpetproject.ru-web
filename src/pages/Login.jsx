@@ -68,27 +68,21 @@ function Login({ setIsAuth }) {
   };
 
   return (
-    <div className="login-container">
-      <h2>Вход</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Номер телефона ( 79630581031 ):</label>
-        <input
-          type="text"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
+    <div className="login__box">
+      <div className="login-container">
+        <h2>Вход</h2>
+        <form onSubmit={handleSubmit}>
+          <label>Номер телефона ( 79630581031 ):</label>
+          <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 
-        <label>Пароль:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <label>Пароль:</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-        <button type="submit">Войти</button>
-      </form>
+          <button type="submit">Войти</button>
+        </form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
     </div>
   );
 }

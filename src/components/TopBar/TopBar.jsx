@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  InputBase,
-  Button,
-  Box,
-  Badge,
-} from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Box, Badge } from "@mui/material";
 import {
   Menu as MenuIcon,
   Search as SearchIcon,
@@ -24,9 +15,7 @@ import { Link as RouterLink } from "react-router-dom";
 import "./TopBar.scss";
 
 // Обёртка для Link, которая не передаёт проп "button" в DOM
-const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => (
-  <RouterLink ref={ref} {...props} />
-));
+const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => <RouterLink ref={ref} {...props} />);
 
 const TopBar = ({ isAuth, setIsAuth }) => {
   const [open, setOpen] = useState(false);
@@ -59,7 +48,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
   return (
     <>
       {/* Верхняя панель */}
-      <AppBar position="static" sx={{ padding: "8px 0" }}>
+      <AppBar position="static" sx={{ padding: "8px 0", backgroundColor: "#5D4037" }}>
         <div className="container">
           <Toolbar disableGutters sx={{ minHeight: "54px !important", padding: 0 }}>
             {/* ЛОГОТИП */}
@@ -69,7 +58,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
               to="/"
               sx={{ textDecoration: "none", color: "inherit", mr: 2 }}
             >
-              My App
+              Город Бизнеса (G2B)
             </Typography>
 
             {/* КНОПКА-ГАМБУРГЕР */}
@@ -96,11 +85,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: "5px", marginRight: "10px" }}>
               {/* Телефон */}
               <Typography variant="body1" sx={{ fontSize: "12px", fontWeight: "bold" }}>
-                <IconButton
-                  component="a"
-                  href="tel:+79659655989"
-                  sx={{ color: "white", padding: "0 10px 0 0" }}
-                >
+                <IconButton component="a" href="tel:+79659655989" sx={{ color: "white", padding: "0 10px 0 0" }}>
                   <LocalPhoneIcon sx={{ fontSize: "16px" }} />
                 </IconButton>
                 <a href="tel:+79659655989" style={{ color: "white", textDecoration: "none" }}>
@@ -109,11 +94,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
               </Typography>
               {/* Email */}
               <Typography variant="body1" sx={{ fontSize: "12px", fontWeight: "bold" }}>
-                <IconButton
-                  component="a"
-                  href="mailto:g2b@migcom.ru"
-                  sx={{ color: "white", padding: "0 10px 0 0" }}
-                >
+                <IconButton component="a" href="mailto:g2b@migcom.ru" sx={{ color: "white", padding: "0 10px 0 0" }}>
                   <EmailIcon sx={{ fontSize: "16px" }} />
                 </IconButton>
                 <a href="mailto:g2b@migcom.ru" style={{ color: "white", textDecoration: "none" }}>
