@@ -116,7 +116,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
             {isAuth && (
               <>
                 {/* Иконка корзины */}
-                <IconButton color="inherit" component={Link} to="/cart" sx={{ ml: 2 }}>
+                <IconButton color="inherit" component={Link} to="/basket" sx={{ ml: 2 }}>
                   <Badge badgeContent={3} color="error">
                     {" "}
                     {/* 3 — примерное кол-во товаров в корзине */}

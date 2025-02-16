@@ -24,7 +24,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import api from "./api";
 
 import "./App.scss";
-import Cart from "./pages/Cart";
+import Basket from "./pages/Basket";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -56,7 +56,7 @@ function App() {
           <Routes>
             {/* Главная страница */}
             <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<ProtectedRoute setIsAuth={setIsAuth}><Cart /></ProtectedRoute>} />
+            <Route path="/basket" element={<ProtectedRoute setIsAuth={setIsAuth}><Basket /></ProtectedRoute>} />
             <Route path="/sale" element={<Sale />} />
             <Route path="/company" element={<Company />} />
             <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />
