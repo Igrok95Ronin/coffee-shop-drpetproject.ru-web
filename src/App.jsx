@@ -1,8 +1,10 @@
 // src/App.jsx
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import NavBar from "./components/NavBar";
 import { Footer } from "./components/Footer/Footer";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 import Home from "./pages/Home";
 import Sale from "./pages/Sale";
@@ -46,7 +48,8 @@ function App() {
     <>
       <BrowserRouter>
         {/* Передаём isAuth и setIsAuth в NavBar, чтобы там менять кнопки */}
-        <NavBar isAuth={isAuth} setIsAuth={setIsAuth} />
+        {/* <NavBar isAuth={isAuth} setIsAuth={setIsAuth} /> */}
+        <Sidebar isAuth={isAuth} setIsAuth={setIsAuth} />
         <main className="main">
           <Routes>
             {/* Главная страница */}
