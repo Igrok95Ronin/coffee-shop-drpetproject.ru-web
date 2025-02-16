@@ -43,3 +43,40 @@
   font-size: 12px !important;
   font-weight: 600 !important;
 }
+
+/* Стили для поля поиска */
+.topbar-search {
+  position: relative;
+  border-radius: 4px; // Можно изменить или использовать переменные темы, если требуется
+  background-color: rgba(255, 255, 255, 0.15);
+  flex-grow: 1;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-left: 16px; // theme.spacing(2) при стандартном масштабе (8px * 2)
+  margin-right: 16px;
+  padding-left: 40px; // theme.spacing(5) при стандартном масштабе (8px * 5)
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.topbar-search-icon-wrapper {
+  position: absolute;
+  left: 8px; // theme.spacing(1) = 8px
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.topbar-styled-input-base {
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  padding-left: 32px; // theme.spacing(4) = 32px
+}
