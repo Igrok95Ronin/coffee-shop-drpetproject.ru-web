@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Footer } from "./components/Footer/Footer";
-import Sidebar from "./components/Sidebar/Sidebar";
 import TopBar from "./components/TopBar/TopBar";
 
 import Home from "./pages/Home";
@@ -56,7 +55,14 @@ function App() {
           <Routes>
             {/* Главная страница */}
             <Route path="/" element={<Home />} />
-            <Route path="/basket" element={<ProtectedRoute setIsAuth={setIsAuth}><Basket /></ProtectedRoute>} />
+            <Route
+              path="/basket"
+              element={
+                <ProtectedRoute setIsAuth={setIsAuth}>
+                  <Basket />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/sale" element={<Sale />} />
             <Route path="/company" element={<Company />} />
             <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />

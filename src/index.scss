@@ -96,7 +96,10 @@ video {
 body {
   margin: auto;
   padding: 0;
-  font: 16px Helvetica, Arial, sans-serif;
+  font:
+    16px Helvetica,
+    Arial,
+    sans-serif;
   max-width: 1920px;
   min-width: 320px;
   color: #000;
@@ -107,9 +110,10 @@ main {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1504px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 32px;
+  width: 100%;
 }
 
 h2 {
