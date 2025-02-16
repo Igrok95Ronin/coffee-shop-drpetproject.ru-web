@@ -10,6 +10,7 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
   Badge,
 } from "@mui/material";
@@ -19,12 +20,27 @@ import {
   ShoppingCart as ShoppingCartIcon,
   LocalPhone as LocalPhoneIcon,
   Email as EmailIcon,
+  Home as HomeIcon,
+  LocalOffer as LocalOfferIcon,
+  Info as InfoIcon,
+  LocalShipping as LocalShippingIcon,
+  ContactMail as ContactMailIcon,
+  Stars as StarsIcon,
+  PersonAdd as PersonAddIcon,
+  LockOpen as LockOpenIcon,
+  VerifiedUser as VerifiedUserIcon,
+  Security as SecurityIcon,
 } from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link as RouterLink , useNavigate } from "react-router-dom";
 import api from "../../api";
 
 import "./TopBar.scss";
+
+// Обёртка для Link, которая не передаёт проп "button" в DOM
+const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => (
+    <RouterLink ref={ref} {...props} />
+  ));
 
 // Стили для поиска
 const Search = styled("div")(({ theme }) => ({
@@ -32,18 +48,18 @@ const Search = styled("div")(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.25) },
-  flexGrow: 1, // Растягивается на всю ширину
-  height: "50px", // Высота поиска
+  flexGrow: 1,
+  height: "50px",
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(2),
   marginRight: theme.spacing(2),
-  paddingLeft: theme.spacing(5), // Отступ для иконки
+  paddingLeft: theme.spacing(5),
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   position: "absolute",
-  left: theme.spacing(1), // Иконка слева
+  left: theme.spacing(1),
   top: "50%",
   transform: "translateY(-50%)",
   display: "flex",
@@ -55,9 +71,9 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   width: "100%",
-  height: "100%", // Высота 100% от родителя (50px)
+  height: "100%",
   fontSize: "18px",
-  paddingLeft: theme.spacing(4), // Смещение текста вправо от иконки
+  paddingLeft: theme.spacing(4),
 }));
 
 const TopBar = ({ isAuth, setIsAuth }) => {
@@ -95,7 +111,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
         <div className="container">
           <Toolbar disableGutters sx={{ minHeight: "54px !important", padding: 0 }}>
             {/* ЛОГОТИП */}
-            <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: "none", color: "inherit", mr: 2 }}>
+            <Typography variant="h6" component={LinkBehavior} to="/" sx={{ textDecoration: "none", color: "inherit", mr: 2 }}>
               My App
             </Typography>
 
@@ -104,7 +120,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
               <MenuIcon />
             </IconButton>
 
-            {/* Поле поиска (на всю ширину и высотой 50px) */}
+            {/* Поле поиска */}
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -114,7 +130,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
                 inputProps={{ "aria-label": "search" }}
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                onKeyDown={handleSearchSubmit} // Обработка Enter
+                onKeyDown={handleSearchSubmit}
               />
             </Search>
 
@@ -145,14 +161,14 @@ const TopBar = ({ isAuth, setIsAuth }) => {
             <Box sx={{ display: "flex", alignItems: "center", ml: "auto", padding: "0 0 0 10px" }}>
               {!isAuth ? (
                 <div className="topBarBtn__wrapper">
-                  <Button className="topBarBtn__exit" sx={{ padding: 0 }} color="inherit" component={Link} to="/login">
+                  <Button className="topBarBtn__exit" sx={{ padding: 0 }} color="inherit" component={LinkBehavior} to="/login">
                     Войти
                   </Button>
                   <Button
                     className="topBarBtn__exit"
                     sx={{ padding: 0 }}
                     color="inherit"
-                    component={Link}
+                    component={LinkBehavior}
                     to="/register"
                   >
                     Зарегистрироваться
@@ -164,16 +180,13 @@ const TopBar = ({ isAuth, setIsAuth }) => {
                 </Button>
               )}
 
-              {/* Если user авторизован */}
+              {/* Корзина, если пользователь авторизован */}
               {isAuth && (
-                <>
-                  {/* Иконка корзины */}
-                  <IconButton color="inherit" component={Link} to="/basket" sx={{ ml: 2 }}>
-                    <Badge badgeContent={3} color="error">
-                      <ShoppingCartIcon />
-                    </Badge>
-                  </IconButton>
-                </>
+                <IconButton color="inherit" component={LinkBehavior} to="/basket" sx={{ ml: 2 }}>
+                  <Badge badgeContent={3} color="error">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
               )}
             </Box>
           </Toolbar>
@@ -182,56 +195,91 @@ const TopBar = ({ isAuth, setIsAuth }) => {
 
       {/* Боковое меню (Drawer) */}
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
-        <List style={{ width: 250 }}>
+        <List className="drawer-list">
           {/* Общие ссылки */}
-          <ListItem component={Link} to="/">
-            <ListItemText primary="Главная" />
+          <ListItem button component={LinkBehavior} to="/" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Главная" className="drawer-list-item-text" />
           </ListItem>
-          <ListItem component={Link} to="/sale">
-            <ListItemText primary="Акции" />
+          <ListItem button component={LinkBehavior} to="/sale" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <LocalOfferIcon />
+            </ListItemIcon>
+            <ListItemText primary="Акции" className="drawer-list-item-text" />
           </ListItem>
-          <ListItem component={Link} to="/company">
-            <ListItemText primary="О компании" />
+          <ListItem button component={LinkBehavior} to="/company" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary="О компании" className="drawer-list-item-text" />
           </ListItem>
-          <ListItem component={Link} to="/payment-and-delivery">
-            <ListItemText primary="Оплата и доставка" />
+          <ListItem button component={LinkBehavior} to="/payment-and-delivery" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <LocalShippingIcon />
+            </ListItemIcon>
+            <ListItemText primary="Оплата и доставка" className="drawer-list-item-text" />
           </ListItem>
-          <ListItem component={Link} to="/contacts">
-            <ListItemText primary="Контакты" />
+          <ListItem button component={LinkBehavior} to="/contacts" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <ContactMailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Контакты" className="drawer-list-item-text" />
           </ListItem>
-          <ListItem component={Link} to="/points">
-            <ListItemText primary="Баллы" />
+          <ListItem button component={LinkBehavior} to="/points" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <StarsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Баллы" className="drawer-list-item-text" />
           </ListItem>
-          <ListItem component={Link} to="/search">
-            <ListItemText primary="Поиск" />
+          <ListItem button component={LinkBehavior} to="/search" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <SearchIcon />
+            </ListItemIcon>
+            <ListItemText primary="Поиск" className="drawer-list-item-text" />
           </ListItem>
-          <ListItem component={Link} to="/basket" sx={{ mr: 3 }}>
-            <Badge badgeContent={3} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-            <ListItemText sx={{ ml: 3 }} primary="Корзина" />
+          <ListItem button component={LinkBehavior} to="/basket" className="drawer-list-item">
+            <ListItemIcon className="drawer-list-item-icon">
+              <Badge badgeContent={3} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </ListItemIcon>
+            <ListItemText primary="Корзина" className="drawer-list-item-text" />
           </ListItem>
 
-          {/* Если user НЕ авторизован */}
+          {/* Если пользователь НЕ авторизован */}
           {!isAuth ? (
             <>
-              <ListItem component={Link} to="/register">
-                <ListItemText primary="Register" />
+              <ListItem button component={LinkBehavior} to="/register" className="drawer-list-item">
+                <ListItemIcon className="drawer-list-item-icon">
+                  <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Register" className="drawer-list-item-text" />
               </ListItem>
-              <ListItem component={Link} to="/login">
-                <ListItemText primary="Login" />
+              <ListItem button component={LinkBehavior} to="/login" className="drawer-list-item">
+                <ListItemIcon className="drawer-list-item-icon">
+                  <LockOpenIcon />
+                </ListItemIcon>
+                <ListItemText primary="Login" className="drawer-list-item-text" />
               </ListItem>
             </>
           ) : (
             <>
-              <ListItem component={Link} to="/protected1">
-                <ListItemText primary="Protected1" />
+              <ListItem button component={LinkBehavior} to="/protected1" className="drawer-list-item">
+                <ListItemIcon className="drawer-list-item-icon">
+                  <VerifiedUserIcon />
+                </ListItemIcon>
+                <ListItemText primary="Protected1" className="drawer-list-item-text" />
               </ListItem>
-              <ListItem component={Link} to="/protected2">
-                <ListItemText primary="Protected2" />
+              <ListItem button component={LinkBehavior} to="/protected2" className="drawer-list-item">
+                <ListItemIcon className="drawer-list-item-icon">
+                  <SecurityIcon />
+                </ListItemIcon>
+                <ListItemText primary="Protected2" className="drawer-list-item-text" />
               </ListItem>
-              <ListItem>
-                <Button variant="outlined" color="error" onClick={handleLogout} fullWidth>
+              <ListItem className="drawer-list-item">
+                <Button variant="outlined" color="error" onClick={handleLogout} fullWidth className="drawer-button">
                   Выход
                 </Button>
               </ListItem>

@@ -1,4 +1,4 @@
-// Стили для кнопок верхней панели
+/* Стили для кнопок верхней панели */
 .topBarBtn {
   &__exit {
     font-size: 10px !important;
@@ -9,4 +9,37 @@
     display: flex !important;
     flex-direction: column !important;
   }
+}
+
+/* Стили для бокового меню (Drawer) */
+.drawer-list {
+  width: 250px;
+}
+
+.drawer-list-item {
+  transition: background-color 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.drawer-list-item-icon {
+  min-width: 40px;
+
+  .MuiSvgIcon-root {
+    font-size: 20px !important; // Измените размер иконок здесь
+  }
+}
+
+.drawer-list-item-text .MuiTypography-root {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.drawer-button {
+  margin: 8px 0;
+  font-size: 12px !important;
+  font-weight: 600 !important;
 }
