@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import NavBar from "./components/NavBar";
 import { Footer } from "./components/Footer/Footer";
 import Sidebar from "./components/Sidebar/Sidebar";
+import TopBar from "./components/TopBar/TopBar";
 
 import Home from "./pages/Home";
 import Sale from "./pages/Sale";
@@ -24,6 +24,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import api from "./api";
 
 import "./App.scss";
+import Cart from "./pages/Cart";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -49,11 +50,13 @@ function App() {
       <BrowserRouter>
         {/* Передаём isAuth и setIsAuth в NavBar, чтобы там менять кнопки */}
         {/* <NavBar isAuth={isAuth} setIsAuth={setIsAuth} /> */}
-        <Sidebar isAuth={isAuth} setIsAuth={setIsAuth} />
+        {/* <Sidebar isAuth={isAuth} setIsAuth={setIsAuth} /> */}
+        <TopBar isAuth={isAuth} setIsAuth={setIsAuth} />
         <main className="main">
           <Routes>
             {/* Главная страница */}
             <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<ProtectedRoute setIsAuth={setIsAuth}><Cart /></ProtectedRoute>} />
             <Route path="/sale" element={<Sale />} />
             <Route path="/company" element={<Company />} />
             <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />
