@@ -11,6 +11,11 @@
   }
 }
 
+.topBar__main {
+  padding: 8px 0;
+  background-color: var(--primary-color) !important;
+}
+
 /* Стили для бокового меню (Drawer) */
 .drawer-list {
   width: 250px;

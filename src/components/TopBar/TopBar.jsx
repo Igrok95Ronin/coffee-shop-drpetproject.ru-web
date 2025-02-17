@@ -48,7 +48,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
   return (
     <>
       {/* Верхняя панель */}
-      <AppBar position="static" sx={{ padding: "8px 0", backgroundColor: "#5D4037" }}>
+      <AppBar className="topBar__main" position="static" >
         <div className="container">
           <Toolbar disableGutters sx={{ minHeight: "54px !important", padding: 0 }}>
             {/* ЛОГОТИП */}

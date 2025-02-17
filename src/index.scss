@@ -1,3 +1,10 @@
+:root {
+  --primary-color: #1684af; /* Основной цвет */
+  --secondary-color: #333333; /* Вторичный цвет */
+  --font-size: 16px; /* Размер шрифта */
+  --border-radius: 10px; /* Скругление углов */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -97,17 +104,14 @@ body {
   margin: auto;
   padding: 0;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
-  font:
-    16px Helvetica,
-    Arial,
-    sans-serif;
+  font: 16px Helvetica, Arial, sans-serif;
   max-width: 1920px;
   min-width: 320px;
   color: #000;
 }
 
 main {
-  min-height: calc(100vh - 117px);
+  min-height: calc(100vh - 137px);
 }
 
 .container {
@@ -134,6 +138,9 @@ button {
   min-height: calc(100vh - 117px);
   width: 100%;
   position: relative;
+  background-image: url("/registerFon.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /* Контейнер всей страницы регистрации */
@@ -165,7 +172,7 @@ button {
   flex-direction: column;
   gap: 15px;
 }
-.register-form-margin{
+.register-form-margin {
   margin-top: 20px;
 }
 
@@ -192,7 +199,7 @@ button {
   color: #fff;
   background-color: #6c5ce7;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -220,8 +227,11 @@ button {
   min-height: calc(100vh - 117px);
   width: 100%;
   position: relative;
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  // background: linear-gradient(135deg, #f8f9fa, #e9ecef);
   padding: 20px;
+  background-image: url("/loginFon.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /* Контейнер формы логина */

@@ -1,9 +1,10 @@
 // src/App.jsx
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import { Footer } from "./components/Footer/Footer";
 import TopBar from "./components/TopBar/TopBar";
+import ImageSlider from "./components/ImageSlider/ImageSlider";
 
 import Home from "./pages/Home";
 import Sale from "./pages/Sale";
@@ -25,77 +26,82 @@ import api from "./api";
 import "./App.scss";
 import Basket from "./pages/Basket";
 
+// Компонент, отвечающий за основное содержимое
+function MainContent({ setIsAuth }) {
+  const location = useLocation();
+
+  // Определяем, должны ли отображаться слайдер
+  const showImageSlider =
+    location.pathname !== "/register" && location.pathname !== "/login";
+
+  return (
+    <main className="main">
+      {showImageSlider && <ImageSlider />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/basket"
+          element={
+            <ProtectedRoute setIsAuth={setIsAuth}>
+              <Basket />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/sale" element={<Sale />} />
+        <Route path="/company" element={<Company />} />
+        <Route
+          path="/payment-and-delivery"
+          element={<PaymentAndDelivery />}
+        />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/Points" element={<Points />} />
+        <Route path="/Search" element={<Search />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
+        <Route
+          path="/protected1"
+          element={
+            <ProtectedRoute setIsAuth={setIsAuth}>
+              <ProtectedOne />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/protected2"
+          element={
+            <ProtectedRoute setIsAuth={setIsAuth}>
+              <ProtectedTwo />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </main>
+  );
+}
+
 function App() {
   const [isAuth, setIsAuth] = useState(false);
 
-  // Допустим, мы хотим при загрузке приложения проверить авторизацию 1 раз
+  // Проверка авторизации при загрузке приложения
   useEffect(() => {
     checkAuth();
   }, []);
 
-  // Функция для проверки авторизации
   const checkAuth = async () => {
     try {
-      await api.get("/protected"); // если 200 - всё ок
+      await api.get("/protected"); // Если ответ 200, значит всё ок
       setIsAuth(true);
     } catch (err) {
-      // если ошибка - значит не авторизованы
       setIsAuth(false);
     }
   };
 
   return (
-    <>
-      <BrowserRouter>
-        {/* Передаём isAuth и setIsAuth в NavBar, чтобы там менять кнопки */}
-        {/* <NavBar isAuth={isAuth} setIsAuth={setIsAuth} /> */}
-        {/* <Sidebar isAuth={isAuth} setIsAuth={setIsAuth} /> */}
-        <TopBar isAuth={isAuth} setIsAuth={setIsAuth} />
-        <main className="main">
-          <Routes>
-            {/* Главная страница */}
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/basket"
-              element={
-                <ProtectedRoute setIsAuth={setIsAuth}>
-                  <Basket />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/sale" element={<Sale />} />
-            <Route path="/company" element={<Company />} />
-            <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />
-            <Route path="/contacts" element={<Contacts />} />
-            <Route path="/Points" element={<Points />} />
-            <Route path="/Search" element={<Search />} />
-
-            {/* Регистрация и Логин */}
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-
-            {/* Защищённые страницы */}
-            <Route
-              path="/protected1"
-              element={
-                <ProtectedRoute setIsAuth={setIsAuth}>
-                  <ProtectedOne />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/protected2"
-              element={
-                <ProtectedRoute setIsAuth={setIsAuth}>
-                  <ProtectedTwo />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </main>
-      </BrowserRouter>
+    <BrowserRouter>
+      <TopBar isAuth={isAuth} setIsAuth={setIsAuth} />
+      <MainContent setIsAuth={setIsAuth} />
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 

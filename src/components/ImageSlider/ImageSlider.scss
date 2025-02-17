@@ -1,0 +1,84 @@
+/* Контейнер для слайдера */
+.slider-container {
+  width: 100%;
+  margin: auto;
+  position: relative;
+  margin-top: 20px;
+}
+
+/* Контейнер для группы изображений */
+.slide-images {
+  display: flex; /* Располагаем картинки в ряд */
+  justify-content: center; /* Выравниваем по центру */
+  gap: 10px; /* Добавляем отступ между картинками */
+}
+
+/* Настройка изображений */
+.slide-image {
+  width: 48%; /* Каждое изображение занимает 48% ширины слайда */
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+
+/* Стили для белых точек */
+.swiper-pagination-bullet {
+  background-color: white !important;
+  opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+  opacity: 1;
+}
+
+/* Скрываем стрелки по умолчанию */
+.swiper-button-prev,
+.swiper-button-next {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out; /* Плавное появление */
+  color: #000 !important;
+  font-size: 24px !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e7e4e4;
+}
+
+/* Показываем стрелки при наведении на слайдер */
+.slider-container:hover .swiper-button-prev,
+.slider-container:hover .swiper-button-next {
+  opacity: 1;
+}
+
+/* Кастомный размер стрелок */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 20px !important;
+}
+
+/* Стили для заголовка и описания */
+.slide-text {
+  position: absolute;
+  top: 30%;
+  left: 100px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.slide-text h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.slide-text p {
+  font-size: 14px;
+  margin: 5px 0 0;
+}
