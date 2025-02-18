@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-function Login({ setIsAuth }) {
+function Login({ setIsAuth, setUserRole }) {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -47,14 +47,26 @@ function Login({ setIsAuth }) {
 
       setIsAuth(true);
 
-      // Сохраняем роль пользователя
+      // ✅ Получаем роль и сохраняем её в состояние
       const { role } = response.data;
+      setUserRole(role); // Теперь setUserRole определён
       localStorage.setItem("userRole", role);
 
       // Если админ, перенаправляем на /add-product
       navigate(role === "admin" ? "/add-product" : "/protected1");
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Ошибка при логине");
+      console.error("Ошибка при логине:", error);
+
+      if (error.response) {
+        console.error("Ответ от сервера:", error.response.data);
+        setErrorMessage(error.response.data.message || "Ошибка при логине");
+      } else if (error.request) {
+        console.error("Сервер не ответил:", error.request);
+        setErrorMessage("Ошибка соединения с сервером. Попробуйте позже.");
+      } else {
+        console.error("Ошибка запроса:", error.message);
+        setErrorMessage("Произошла неизвестная ошибка.");
+      }
     }
   };
 

@@ -17,7 +17,7 @@ import "./TopBar.scss";
 // Обёртка для Link, которая не передаёт проп "button" в DOM
 const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => <RouterLink ref={ref} {...props} />);
 
-const TopBar = ({ isAuth, setIsAuth, userRole }) => {
+const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout }) => {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
@@ -27,16 +27,16 @@ const TopBar = ({ isAuth, setIsAuth, userRole }) => {
   };
 
   // Обработчик выхода
-  const handleLogout = async () => {
-    try {
-      await api.post("/logout");
-      setIsAuth(false);
-      navigate("/login");
-      setOpen(false);
-    } catch (err) {
-      console.error("Ошибка при логауте:", err);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await api.post("/logout");
+  //     setIsAuth(false);
+  //     navigate("/login");
+  //     setOpen(false);
+  //   } catch (err) {
+  //     console.error("Ошибка при логауте:", err);
+  //   }
+  // };
 
   // Обработчик поиска (по нажатию Enter)
   const handleSearchSubmit = (e) => {

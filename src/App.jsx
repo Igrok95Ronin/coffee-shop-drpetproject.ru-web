@@ -26,7 +26,7 @@ import api from "./api";
 import "./App.scss";
 import Basket from "./pages/Basket";
 
-function MainContent({ setIsAuth, userRole }) {
+function MainContent({ setIsAuth, userRole, setUserRole }) {
   const location = useLocation();
 
   // Определяем, должны ли отображаться слайдер
@@ -52,7 +52,8 @@ function MainContent({ setIsAuth, userRole }) {
         <Route path="/Points" element={<Points />} />
         <Route path="/Search" element={<Search />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
+        <Route path="/login" element={<Login setIsAuth={setIsAuth} setUserRole={setUserRole} />} />
+
         <Route
           path="/protected1"
           element={
@@ -108,10 +109,26 @@ function App() {
     }
   };
 
+  // ✅ Добавляем `handleLogout`
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout");
+    } catch (err) {
+      console.error("Ошибка при выходе:", err);
+    }
+
+    setIsAuth(false);
+    setUserRole(null);
+    localStorage.removeItem("userRole");
+
+    navigate("/login"); // Перенаправляем на страницу логина
+  };
+
   return (
     <BrowserRouter>
-      <TopBar isAuth={isAuth} setIsAuth={setIsAuth} userRole={userRole} />
-      <MainContent setIsAuth={setIsAuth} userRole={userRole} />
+      <TopBar isAuth={isAuth} setIsAuth={setIsAuth} userRole={userRole} handleLogout={handleLogout} />
+      <MainContent setIsAuth={setIsAuth} userRole={userRole} setUserRole={setUserRole} />{" "}
+      {/* ✅ Передаём setUserRole */}
       <Footer />
     </BrowserRouter>
   );
