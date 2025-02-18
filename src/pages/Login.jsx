@@ -8,7 +8,6 @@ function Login({ setIsAuth }) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Функция для форматирования номера, аналогичная предыдущему примеру
   function formatPhoneNumber(phone) {
     let cleaned = phone.trim();
     if (cleaned.startsWith("+")) {
@@ -22,20 +21,11 @@ function Login({ setIsAuth }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(""); // Очистка ошибки перед проверками
+    setErrorMessage("");
 
-    // 1. Убираем лишние пробелы/табы
-    const trimmedPhone = phoneNumber.trim();
+    const formattedPhone = formatPhoneNumber(phoneNumber.trim());
     const trimmedPassword = password.trim();
 
-    // 2. Форматируем номер
-    const formattedPhone = formatPhoneNumber(trimmedPhone);
-
-    // --- Проверки для номера телефона ---
-    if (!formattedPhone) {
-      setErrorMessage("Номер телефона не должен быть пустым");
-      return;
-    }
     if (!/^\d+$/.test(formattedPhone)) {
       setErrorMessage("Номер телефона может содержать только цифры");
       return;
@@ -44,9 +34,6 @@ function Login({ setIsAuth }) {
       setErrorMessage("Некорректная длина номера. Ожидается 10 или 11 цифр");
       return;
     }
-
-    // --- Проверки для пароля ---
-    // Только латинские буквы и цифры, минимум 6 символов
     if (!/^[A-Za-z0-9]{6,}$/.test(trimmedPassword)) {
       setErrorMessage("Пароль должен быть не короче 6 символов и содержать только латинские буквы и цифры");
       return;
@@ -57,13 +44,17 @@ function Login({ setIsAuth }) {
         phoneNumber: formattedPhone,
         password: trimmedPassword,
       });
-      console.log(response.data);
 
       setIsAuth(true);
-      navigate("/protected1");
+
+      // Сохраняем роль пользователя
+      const { role } = response.data;
+      localStorage.setItem("userRole", role);
+
+      // Если админ, перенаправляем на /add-product
+      navigate(role === "admin" ? "/add-product" : "/protected1");
     } catch (error) {
-      console.error("Ошибка при логине:", error);
-      setErrorMessage(error.response?.data?.error?.message || error.response?.data?.message || "Неизвестная ошибка");
+      setErrorMessage(error.response?.data?.message || "Ошибка при логине");
     }
   };
 

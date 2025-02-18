@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
@@ -13,6 +12,7 @@ import PaymentAndDelivery from "./pages/PaymentAndDelivery";
 import Contacts from "./pages/Contacts";
 import Points from "./pages/Points";
 import Search from "./pages/Search";
+import AddProduct from "./pages/AddProduct";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -26,13 +26,11 @@ import api from "./api";
 import "./App.scss";
 import Basket from "./pages/Basket";
 
-// Компонент, отвечающий за основное содержимое
-function MainContent({ setIsAuth }) {
+function MainContent({ setIsAuth, userRole }) {
   const location = useLocation();
 
   // Определяем, должны ли отображаться слайдер
-  const showImageSlider =
-    location.pathname !== "/register" && location.pathname !== "/login";
+  const showImageSlider = location.pathname !== "/register" && location.pathname !== "/login";
 
   return (
     <main className="main">
@@ -49,10 +47,7 @@ function MainContent({ setIsAuth }) {
         />
         <Route path="/sale" element={<Sale />} />
         <Route path="/company" element={<Company />} />
-        <Route
-          path="/payment-and-delivery"
-          element={<PaymentAndDelivery />}
-        />
+        <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/Points" element={<Points />} />
         <Route path="/Search" element={<Search />} />
@@ -74,6 +69,18 @@ function MainContent({ setIsAuth }) {
             </ProtectedRoute>
           }
         />
+
+        {/* Доступ к добавлению продукта только для администратора */}
+        {userRole === "admin" && (
+          <Route
+            path="/add-product"
+            element={
+              <ProtectedRoute setIsAuth={setIsAuth} requiredRole="admin">
+                {userRole === "admin" ? <AddProduct /> : <div>Нет доступа</div>}
+              </ProtectedRoute>
+            }
+          />
+        )}
       </Routes>
     </main>
   );
@@ -81,25 +88,30 @@ function MainContent({ setIsAuth }) {
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
+  const [userRole, setUserRole] = useState(null); // Добавляем состояние для роли
 
-  // Проверка авторизации при загрузке приложения
   useEffect(() => {
     checkAuth();
   }, []);
 
   const checkAuth = async () => {
     try {
-      await api.get("/protected"); // Если ответ 200, значит всё ок
+      const response = await api.get("/protected"); // Если ответ 200, значит всё ок
       setIsAuth(true);
+
+      // Получаем актуальную роль с сервера
+      const roleResponse = await api.get("/check-role");
+      setUserRole(roleResponse.data.role);
     } catch (err) {
       setIsAuth(false);
+      setUserRole(null);
     }
   };
 
   return (
     <BrowserRouter>
-      <TopBar isAuth={isAuth} setIsAuth={setIsAuth} />
-      <MainContent setIsAuth={setIsAuth} />
+      <TopBar isAuth={isAuth} setIsAuth={setIsAuth} userRole={userRole} />
+      <MainContent setIsAuth={setIsAuth} userRole={userRole} />
       <Footer />
     </BrowserRouter>
   );

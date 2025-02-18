@@ -17,7 +17,7 @@ import "./TopBar.scss";
 // Обёртка для Link, которая не передаёт проп "button" в DOM
 const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => <RouterLink ref={ref} {...props} />);
 
-const TopBar = ({ isAuth, setIsAuth }) => {
+const TopBar = ({ isAuth, setIsAuth, userRole }) => {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
@@ -145,7 +145,7 @@ const TopBar = ({ isAuth, setIsAuth }) => {
       </AppBar>
 
       {/* Боковое меню (Drawer) вынесено в отдельный компонент */}
-      <DrawerMenu open={open} toggleDrawer={toggleDrawer} isAuth={isAuth} handleLogout={handleLogout} />
+      <DrawerMenu open={open} toggleDrawer={toggleDrawer} isAuth={isAuth} userRole={userRole} handleLogout={handleLogout} />
     </>
   );
 };

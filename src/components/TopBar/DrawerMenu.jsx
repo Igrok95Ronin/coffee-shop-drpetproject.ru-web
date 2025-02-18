@@ -20,7 +20,7 @@ import "./TopBar.scss";
 // Обёртка для Link, которая не передаёт проп "button" в DOM
 const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => <RouterLink ref={ref} {...props} />);
 
-const DrawerMenu = ({ open, toggleDrawer, isAuth, handleLogout }) => {
+const DrawerMenu = ({ open, toggleDrawer, isAuth, userRole, handleLogout }) => {
   return (
     <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
       <List className="drawer-list">
@@ -67,14 +67,6 @@ const DrawerMenu = ({ open, toggleDrawer, isAuth, handleLogout }) => {
           </ListItemIcon>
           <ListItemText primary="Поиск" className="drawer-list-item-text" />
         </ListItem>
-        <ListItem button component={LinkBehavior} to="/basket" className="drawer-list-item">
-          <ListItemIcon className="drawer-list-item-icon">
-            <Badge badgeContent={3} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </ListItemIcon>
-          <ListItemText primary="Корзина" className="drawer-list-item-text" />
-        </ListItem>
 
         {/* Если пользователь НЕ авторизован */}
         {!isAuth ? (
@@ -94,6 +86,14 @@ const DrawerMenu = ({ open, toggleDrawer, isAuth, handleLogout }) => {
           </>
         ) : (
           <>
+            <ListItem button component={LinkBehavior} to="/basket" className="drawer-list-item">
+              <ListItemIcon className="drawer-list-item-icon">
+                <Badge badgeContent={3} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </ListItemIcon>
+              <ListItemText primary="Корзина" className="drawer-list-item-text" />
+            </ListItem>
             <ListItem button component={LinkBehavior} to="/protected1" className="drawer-list-item">
               <ListItemIcon className="drawer-list-item-icon">
                 <VerifiedUserIcon />
@@ -106,6 +106,17 @@ const DrawerMenu = ({ open, toggleDrawer, isAuth, handleLogout }) => {
               </ListItemIcon>
               <ListItemText primary="Protected2" className="drawer-list-item-text" />
             </ListItem>
+
+            {/* Показываем "Добавить продукт" только если роль admin */}
+            {userRole === "admin" && (
+              <ListItem button component={LinkBehavior} to="/add-product" className="drawer-list-item">
+                <ListItemIcon className="drawer-list-item-icon">
+                  <SecurityIcon />
+                </ListItemIcon>
+                <ListItemText primary="Добавить продукт" className="drawer-list-item-text" />
+              </ListItem>
+            )}
+
             <ListItem className="drawer-list-item">
               <Button variant="outlined" color="error" onClick={handleLogout} fullWidth className="drawer-button">
                 Выход
