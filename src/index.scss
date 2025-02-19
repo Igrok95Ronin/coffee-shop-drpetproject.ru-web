@@ -111,7 +111,7 @@ body {
 }
 
 main {
-  min-height: calc(100vh - 137px);
+  min-height: calc(100vh - 127px);
 }
 
 .container {
@@ -141,6 +141,7 @@ button {
   background-image: url("/registerFon.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  margin-top: 70px;
 }
 
 /* Контейнер всей страницы регистрации */
@@ -232,6 +233,7 @@ button {
   background-image: url("/loginFon.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  margin-top: 70px;
 }
 
 /* Контейнер формы логина */

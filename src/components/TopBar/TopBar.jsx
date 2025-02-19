@@ -41,14 +41,17 @@ const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout }) => {
   // Обработчик поиска (по нажатию Enter)
   const handleSearchSubmit = (e) => {
     if (e.key === "Enter") {
-      navigate(`/search?q=${encodeURIComponent(searchValue)}`);
+      const trimmedValue = searchValue.trim();
+      if (trimmedValue.length >= 3) {
+        navigate(`/search?q=${encodeURIComponent(trimmedValue)}`);
+      }
     }
   };
 
   return (
     <>
       {/* Верхняя панель */}
-      <AppBar className="topBar__main" position="static" >
+      <AppBar className="topBar__main" position="static">
         <div className="container">
           <Toolbar disableGutters sx={{ minHeight: "54px !important", padding: 0 }}>
             {/* ЛОГОТИП */}
@@ -145,7 +148,13 @@ const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout }) => {
       </AppBar>
 
       {/* Боковое меню (Drawer) вынесено в отдельный компонент */}
-      <DrawerMenu open={open} toggleDrawer={toggleDrawer} isAuth={isAuth} userRole={userRole} handleLogout={handleLogout} />
+      <DrawerMenu
+        open={open}
+        toggleDrawer={toggleDrawer}
+        isAuth={isAuth}
+        userRole={userRole}
+        handleLogout={handleLogout}
+      />
     </>
   );
 };

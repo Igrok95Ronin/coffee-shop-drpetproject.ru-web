@@ -1,51 +1,15 @@
-import React, { useState, useEffect } from "react";
+// src/pages/Home.jsx
+import React from "react";
 import { Link } from "react-router-dom";
 import HelmetMeta from "../components/HelmetMeta/HelmetMeta";
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, Skeleton } from "@mui/material";
 
-import api from "../api";
+import { useFetchProducts } from "../hooks/useFetchProducts"; // <-- Импортируем наш кастомный хук
 import "./Home.scss";
 
 function Home() {
-  const [data, setData] = useState([]);       // Массив товаров
-  const [loading, setLoading] = useState(false); // Первичная загрузка
-  const [loadingMore, setLoadingMore] = useState(false); // Для кнопки "Показать еще"
-  const [offset, setOffset] = useState(0);    // Для пагинации
-  const [hasMore, setHasMore] = useState(true); // Флаг для кнопки
-
-  // Загрузка товаров
-  const fetchData = async (isInitial = false) => {
-    if (isInitial) {
-      setLoading(true);   // Для первой загрузки
-    } else {
-      setLoadingMore(true); // Для подгрузки
-    }
-
-    try {
-      const response = await api.get("/", {
-        params: { limit: 24, offset: offset },
-      });
-
-      const newProducts = response.data;
-
-      if (newProducts.length < 24) {
-        setHasMore(false); // Если меньше 24 — больше данных нет
-      }
-
-      setData((prev) => [...prev, ...newProducts]);
-      setOffset((prevOffset) => prevOffset + 24);
-    } catch (err) {
-      console.error("Ошибка при получении данных:", err);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  };
-
-  // Первоначальная загрузка
-  useEffect(() => {
-    fetchData(true);
-  }, []);
+  // Используем хук (по умолчанию 24)
+  const { data, loading, loadingMore, hasMore, fetchMore } = useFetchProducts(24);
 
   return (
     <section className="home">
@@ -123,7 +87,7 @@ function Home() {
               className="home__btnShow"
               variant="contained"
               size="small"
-              onClick={() => fetchData(false)}
+              onClick={fetchMore} // <-- Используем метод из хука
               disabled={loadingMore}
               color="inherit"
             >

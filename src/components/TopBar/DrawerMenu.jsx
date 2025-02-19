@@ -61,12 +61,12 @@ const DrawerMenu = ({ open, toggleDrawer, isAuth, userRole, handleLogout }) => {
           </ListItemIcon>
           <ListItemText primary="Баллы" className="drawer-list-item-text" />
         </ListItem>
-        <ListItem button component={LinkBehavior} to="/search" className="drawer-list-item">
+        {/* <ListItem button component={LinkBehavior} to="/search" className="drawer-list-item">
           <ListItemIcon className="drawer-list-item-icon">
             <SearchIcon />
           </ListItemIcon>
           <ListItemText primary="Поиск" className="drawer-list-item-text" />
-        </ListItem>
+        </ListItem> */}
 
         {/* Если пользователь НЕ авторизован */}
         {!isAuth ? (
