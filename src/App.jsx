@@ -13,6 +13,7 @@ import Contacts from "./pages/Contacts";
 import Points from "./pages/Points";
 import Search from "./pages/Search";
 import AddProduct from "./pages/AddProduct";
+import ProductPage from "./pages/ProductPage";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -37,6 +38,7 @@ function MainContent({ setIsAuth, userRole, setUserRole }) {
       {showImageSlider && <ImageSlider />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductPage />} />
         <Route
           path="/basket"
           element={
