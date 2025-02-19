@@ -16,13 +16,12 @@
 
 /* Настройка изображений */
 .slide-image {
-  width: 48%; /* Каждое изображение занимает 48% ширины слайда */
+  width: 50%; /* Каждое изображение занимает 48% ширины слайда */
   height: 300px;
   object-fit: cover;
   object-position: center;
   border-radius: 10px;
 }
-
 
 /* Стили для белых точек */
 .swiper-pagination-bullet {

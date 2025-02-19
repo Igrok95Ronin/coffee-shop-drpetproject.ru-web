@@ -53,7 +53,7 @@ function Login({ setIsAuth, setUserRole }) {
       localStorage.setItem("userRole", role);
 
       // Если админ, перенаправляем на /add-product
-      navigate(role === "admin" ? "/add-product" : "/protected1");
+      navigate(role === "admin" ? "/add-product" : "/");
     } catch (error) {
       console.error("Ошибка при логине:", error);
 
