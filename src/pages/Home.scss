@@ -1,10 +1,11 @@
 .home {
-  &__box {
-  }
+  //   &__box {
+  //   }
   &__wrapperCard {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
+    row-gap: 40px;
     justify-content: space-between;
   }
   &__card {
@@ -45,5 +46,12 @@
     border-radius: 8px !important;
     font-weight: 700 !important;
     text-transform: none !important;
+  }
+  &__btnMore {
+    text-align: center;
+    margin: 20px 0;
+  }
+  &__btnShow{
+    font-size: 10px !important;
   }
 }
