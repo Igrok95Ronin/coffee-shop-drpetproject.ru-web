@@ -22,7 +22,7 @@ function Home() {
 
         <div className="home__wrapperCard">
           {/* Skeleton при первичной загрузке */}
-          {loading && (
+          {loading &&
             [...Array(24)].map((_, index) => (
               <Card className="home__card" key={`skeleton-${index}`} sx={{ width: 215 }}>
                 <Skeleton variant="rectangular" height={286} />
@@ -34,20 +34,13 @@ function Home() {
                   <Skeleton variant="rectangular" height={36} width="100%" />
                 </CardActions>
               </Card>
-            ))
-          )}
+            ))}
 
           {/* Отображаем карточки товаров */}
           {data.map((prod) => (
             <Card className="home__card" key={prod.id} sx={{ maxWidth: 215 }}>
               <Link to={`/product/${prod.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                <CardMedia
-                  className="home__img"
-                  component="img"
-                  height="286"
-                  image={prod.imgSrc}
-                  alt={prod.name}
-                />
+                <CardMedia className="home__img" component="img" height="286" image={prod.imgSrc} alt={prod.name} />
                 <CardContent className="home__content">
                   <Typography className="home__price">{prod.price} ₽</Typography>
                   <Typography className="home__name" variant="h2">
@@ -56,15 +49,15 @@ function Home() {
                 </CardContent>
               </Link>
               <CardActions className="home__btnWrp">
-                <Button variant="contained" className="home__btnCard" size="small">
-                  В корзину
+                <Button variant="contained" className={prod.inBasket ? "home__btnInCard" : "home__btnCard"} size="small">
+                  {prod.inBasket ? "В корзине" : "Добавить в корзину"}
                 </Button>
               </CardActions>
             </Card>
           ))}
 
           {/* Skeleton при подгрузке новых данных */}
-          {loadingMore && (
+          {loadingMore &&
             [...Array(24)].map((_, index) => (
               <Card className="home__card" key={`skeleton-more-${index}`} sx={{ width: 215 }}>
                 <Skeleton variant="rectangular" height={286} />
@@ -76,8 +69,7 @@ function Home() {
                   <Skeleton variant="rectangular" height={36} width="100%" />
                 </CardActions>
               </Card>
-            ))
-          )}
+            ))}
         </div>
 
         {/* Кнопка "Показать еще" */}

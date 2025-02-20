@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Button } from "@mui/material";
+
 import ImageGallery from "react-image-gallery";
 import api from "../api";
+
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./ProductPage.scss";
 
@@ -102,14 +105,31 @@ function ProductPage() {
                   </div>
                 </div>
               )}
+
+              {/* Блок с ценой и кнопкой */}
+              <div className="productPage__purchase">
+                <h2 className="productPage__price">{data.price} ₽</h2>
+
+                <Button
+                  variant="contained"
+                  className={data.inBasket ? "productPage__btnInCard" : "productPage__btnCard"}
+                  size="medium"
+                >
+                  {data.inBasket ? "В корзине" : "Добавить в корзину"}
+                </Button>
+              </div>
             </div>
           </div>
 
-          <div className="productPage__right">
-            <p>
-              <strong>Цена:</strong> {data.price} ₽
-            </p>
-          </div>
+          {/* <div className="productPage__right">
+            <div className="productPage__price-card">
+              <h2 className="productPage__price">{data.price} ₽</h2>
+
+              <Button variant="contained" className={data.inBasket ? "home__btnInCard" : "home__btnCard"} size="medium">
+                {data.inBasket ? "В корзине" : "Добавить в корзину"}
+              </Button>
+            </div>
+          </div> */}
         </div>
       </div>
     </section>
