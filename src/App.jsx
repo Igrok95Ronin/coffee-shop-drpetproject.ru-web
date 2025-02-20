@@ -31,7 +31,11 @@ function MainContent({ setIsAuth, userRole, setUserRole }) {
   const location = useLocation();
 
   // Определяем, должны ли отображаться слайдер
-  const showImageSlider = location.pathname !== "/register" && location.pathname !== "/login" && location.pathname !== "/search";
+  const showImageSlider =
+    location.pathname !== "/register" &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/search" &&
+    !location.pathname.startsWith("/product/");
 
   return (
     <main className="main">

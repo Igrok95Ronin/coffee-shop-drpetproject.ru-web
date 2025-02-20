@@ -1,0 +1,213 @@
+.productPage {
+  margin: 80px 0 20px;
+  &__box {
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr 0.8fr 0.5fr;
+    gap: 28px;
+  }
+  //   &__name {
+  //     max-height: 56px;
+  //     margin-bottom: 8px;
+  //     font-size: 20px;
+  //     font-weight: 400;
+  //     line-height: 28px;
+  //     color: #242424;
+  //     font-weight: 700;
+  //   }
+}
+
+/* Контейнер для зум-эффекта */
+.zoom-container {
+  position: relative;
+  width: 100%;
+  height: 700px; /* Можно задать свою высоту */
+  background-repeat: no-repeat;
+  background-size: cover; /* По умолчанию не увеличиваем */
+  overflow: hidden;
+  cursor: zoom-in; /* При наведении показываем лупу */
+  transition: background-size 0.3s ease;
+  border-radius: 10px;
+}
+
+/* Когда zoomed=true, картинка увеличивается в 2 раза */
+.zoom-container.zoomed {
+  background-size: 200%; /* можно 150%, 300% — на вкус */
+  cursor: zoom-out; /* Меняем иконку курсора */
+}
+
+/* Прозрачное изображение, чтобы галерея видела размеры */
+.zoom-container img {
+  max-width: 100%;
+  height: 700px;
+  display: block;
+}
+
+/* Общие стили для стрелок */
+.image-gallery-left-nav,
+.image-gallery-right-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  opacity: 0; /* Изначально скрыты */
+  visibility: hidden; /* Чтобы не было кликабельности */
+  z-index: 10;
+}
+
+/* При наведении на галерею показываем стрелки */
+.productPage__image-gallery:hover .image-gallery-left-nav,
+.productPage__image-gallery:hover .image-gallery-right-nav {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* При наведении на сами стрелки — небольшой эффект */
+.image-gallery-left-nav:hover,
+.image-gallery-right-nav:hover {
+  background-color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Левая стрелка */
+.image-gallery-left-nav {
+  left: 10px;
+}
+
+/* Правая стрелка */
+.image-gallery-right-nav {
+  right: 10px;
+}
+
+/* Размер иконки внутри */
+.image-gallery-icon {
+  color: white; /* Изменим цвет для контраста */
+  font-size: 28px;
+}
+
+// !!!!!!!!!!!!!!
+/* Центрированный контейнер */
+.productPage__center {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Карточка информации */
+.productPage__info-card {
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-height: 660px; /* Ограничиваем общую высоту */
+  overflow: hidden;
+}
+
+/* Анимация при наведении */
+.productPage__info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Заголовок */
+.productPage__name {
+  font-size: 30px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Описание */
+.productPage__description {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ограничение высоты описания */
+.productPage__description-content {
+  max-height: 170px; /* Высота блока */
+  overflow-y: auto; /* Вертикальный скролл */
+  padding-right: 10px;
+}
+
+/* Характеристики */
+.productPage__characteristics {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #e6f7ff;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ограничение высоты для характеристик */
+.productPage__characteristics-content {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Стили списка */
+.productPage__characteristics-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.productPage__characteristics-content li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* Ключ и значение */
+.characteristic-key {
+  font-weight: 600;
+  color: #333;
+}
+
+.characteristic-value {
+  color: #555;
+}
+
+/* Последний элемент без границы */
+.productPage__characteristics-content li:last-child {
+  border-bottom: none;
+}
+
+/* Стили скроллбара (для Webkit) */
+.productPage__description-content::-webkit-scrollbar,
+.productPage__characteristics-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.productPage__description-content::-webkit-scrollbar-thumb,
+.productPage__characteristics-content::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 10px;
+}
+
+.productPage__description-content::-webkit-scrollbar-track,
+.productPage__characteristics-content::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
