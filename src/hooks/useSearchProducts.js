@@ -1,87 +1,61 @@
-// src/hooks/useSearchProducts.js
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // Чтобы брать q из URL
+import { useLocation } from "react-router-dom";
 import api from "../api";
 
 export default function useSearchProducts(limit = 24) {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false); // загрузка первого экрана
-  const [loadingMore, setLoadingMore] = useState(false); // загрузка «Показать еще»
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [total, setTotal] = useState(0);
 
-  // Забираем параметр ?q из URL, используя React Router
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const q = params.get("q") || "";
+  const q = params.get("q")?.trim() || "";
 
-  // Основная функция для загрузки товаров
-  const fetchData = async (isInitial = false) => {
-    // При первой загрузке показываем один скелетон, при догрузке — другой
+  // 🌟 Главная функция загрузки данных
+  const fetchData = async (newOffset = 0, isInitial = false) => {
     if (isInitial) {
       setLoading(true);
+      setData([]);      // Сбрасываем данные при новом запросе
+      setOffset(0);     // Всегда начинаем с 0
     } else {
       setLoadingMore(true);
     }
 
     try {
-      // Делаем GET-запрос на бэкенд /search
       const response = await api.get("/search", {
-        params: { q, limit, offset },
+        params: { q, limit, offset: newOffset },  // Используем переданный offset
       });
-      // На бэкенде мы возвращаем { "products": [...], "total": N }
-      const { products, total } = response.data;
 
+      const { products, total } = response.data;
       setTotal(total);
 
-      // Если total = 0 (ничего не найдено), сразу прячем кнопку
-      if (total === 0) {
-        setHasMore(false);
-      }
-
-      // Если вернулось меньше, чем limit, данных больше нет
       if (products.length < limit) {
         setHasMore(false);
       }
 
-      // Добавляем полученные товары к предыдущим
-      setData((prev) => [...prev, ...products]);
-
-      // Увеличиваем смещение для следующей порции
-      setOffset((prevOffset) => prevOffset + limit);
+      setData((prev) => (newOffset === 0 ? products : [...prev, ...products]));
+      setOffset(newOffset + limit);  // Обновляем offset для следующей подгрузки
     } catch (err) {
       console.error("Ошибка при поиске:", err);
-      // Тут можно показать пользователю уведомление
     } finally {
       setLoading(false);
       setLoadingMore(false);
     }
   };
 
-  // Загружаем данные, когда компонент маунтится или когда q меняется
+  // 🌟 Обновление при изменении `q`
   useEffect(() => {
-    // Сбрасываем старые результаты, если пользователь меняет запрос q
-    setData([]);
-    setOffset(0);
     setHasMore(true);
-    setTotal(0); // сбрасываем total
-
-    // Первая загрузка (isInitial = true)
-    fetchData(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchData(0, true);  // Всегда начинаем с offset = 0
   }, [q]);
 
-  // Функция для догрузки при клике «Показать ещё»
-  const fetchMore = () => fetchData(false);
-
-  return {
-    data, // Товары
-    loading, // Флаг первичной загрузки
-    loadingMore, // Флаг загрузки дополнительных товаров
-    hasMore, // Можно ли ещё подгружать
-    fetchMore, // Функция для подгрузки по кнопке
-    q, // Сам поисковый запрос (можно выводить на UI)
-    total,
+  // 🌟 Функция для подгрузки
+  const fetchMore = () => {
+    fetchData(offset, false);  // Используем актуальный offset
   };
+
+  return { data, loading, loadingMore, hasMore, fetchMore, q, total };
 }

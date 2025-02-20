@@ -1,12 +1,12 @@
 .search {
-  //   &__box {
-  //   }
+  &__box {
+    min-height: calc(100vh - 47px) !important;
+  }
   &__wrapperCard {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 36px;
     row-gap: 40px;
-    justify-content: space-between;
   }
   &__card {
     display: flex;
@@ -62,5 +62,6 @@
       margin: 0 10px;
       color: #e7e07a;
     }
+    margin-top: 80px !important;
   }
 }
