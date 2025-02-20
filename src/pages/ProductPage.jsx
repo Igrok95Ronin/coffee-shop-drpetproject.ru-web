@@ -11,7 +11,7 @@ import "./ProductPage.scss";
 // Импортируем наш компонент лупы
 import ZoomableImage from "../components/ZoomableImage/ZoomableImage";
 
-function ProductPage() {
+function ProductPage({ isAuth }) {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -109,14 +109,15 @@ function ProductPage() {
               {/* Блок с ценой и кнопкой */}
               <div className="productPage__purchase">
                 <h2 className="productPage__price">{data.price} ₽</h2>
-
-                <Button
-                  variant="contained"
-                  className={data.inBasket ? "productPage__btnInCard" : "productPage__btnCard"}
-                  size="medium"
-                >
-                  {data.inBasket ? "В корзине" : "Добавить в корзину"}
-                </Button>
+                {isAuth && (
+                  <Button
+                    variant="contained"
+                    className={data.inBasket ? "productPage__btnInCard" : "productPage__btnCard"}
+                    size="medium"
+                  >
+                    {data.inBasket ? "В корзине" : "Добавить в корзину"}
+                  </Button>
+                )}
               </div>
             </div>
           </div>

@@ -27,7 +27,7 @@ import api from "./api";
 import "./App.scss";
 import Basket from "./pages/Basket";
 
-function MainContent({ setIsAuth, userRole, setUserRole }) {
+function MainContent({ setIsAuth, userRole, setUserRole, isAuth }) {
   const location = useLocation();
 
   // Определяем, должны ли отображаться слайдер
@@ -41,8 +41,8 @@ function MainContent({ setIsAuth, userRole, setUserRole }) {
     <main className="main">
       {showImageSlider && <ImageSlider />}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/" element={<Home isAuth={isAuth} />} />
+        <Route path="/product/:id" element={<ProductPage isAuth={isAuth} />} />
         <Route
           path="/basket"
           element={
@@ -133,7 +133,7 @@ function App() {
   return (
     <BrowserRouter>
       <TopBar isAuth={isAuth} setIsAuth={setIsAuth} userRole={userRole} handleLogout={handleLogout} />
-      <MainContent setIsAuth={setIsAuth} userRole={userRole} setUserRole={setUserRole} />{" "}
+      <MainContent setIsAuth={setIsAuth} userRole={userRole} setUserRole={setUserRole} isAuth={isAuth} />{" "}
       {/* ✅ Передаём setUserRole */}
       <Footer />
     </BrowserRouter>

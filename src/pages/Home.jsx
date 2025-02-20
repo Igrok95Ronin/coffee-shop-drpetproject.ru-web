@@ -7,7 +7,7 @@ import { Card, CardMedia, CardContent, Typography, CardActions, Button, Skeleton
 import { useFetchProducts } from "../hooks/useFetchProducts"; // <-- Импортируем наш кастомный хук
 import "./Home.scss";
 
-function Home() {
+function Home({ isAuth }) {
   // Используем хук (по умолчанию 24)
   const { data, loading, loadingMore, hasMore, fetchMore } = useFetchProducts(24);
 
@@ -48,11 +48,17 @@ function Home() {
                   </Typography>
                 </CardContent>
               </Link>
-              <CardActions className="home__btnWrp">
-                <Button variant="contained" className={prod.inBasket ? "home__btnInCard" : "home__btnCard"} size="small">
-                  {prod.inBasket ? "В корзине" : "Добавить в корзину"}
-                </Button>
-              </CardActions>
+              {isAuth && (
+                <CardActions className="home__btnWrp">
+                  <Button
+                    variant="contained"
+                    className={prod.inBasket ? "home__btnInCard" : "home__btnCard"}
+                    size="small"
+                  >
+                    {prod.inBasket ? "В корзине" : "Добавить в корзину"}
+                  </Button>
+                </CardActions>
+              )}
             </Card>
           ))}
 
