@@ -22,8 +22,8 @@ import api from "../api";
 
 import "./Basket.scss";
 
-function Basket() {
-  const [products, setProducts] = useState([]);
+function Basket({ products, setProducts }) {
+  // const [products, setProducts] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,12 +50,27 @@ function Basket() {
     fetchData();
   }, []);
 
-  // Удаление товара
-  const handleDelete = (id) => {
-    setProducts(products.filter((prod) => prod.id !== id));
-    const newSelected = { ...selectedItems };
-    delete newSelected[id];
-    setSelectedItems(newSelected);
+  // Удаление товара из корзины
+  const handleDelete = async (id) => {
+    try {
+      // Удаление через DELETE с передачей данных в поле "data"
+      await api.delete("/delfrombasket", {
+        data: { prodID: id },
+      });
+
+      setProducts((prevProducts) => [...prevProducts, { id: id }]);
+      // Обновление состояния после удаления
+      setProducts((prevProducts) => prevProducts.filter((prod) => prod.id !== id));
+      setSelectedItems((prevSelected) => {
+        const updated = { ...prevSelected };
+        delete updated[id];
+        return updated;
+      });
+
+      // console.log(`Товар с ID ${id} успешно удалён.`);
+    } catch (err) {
+      setError("Ошибка удаления товара:", err);
+    }
   };
 
   // Изменение количества товара

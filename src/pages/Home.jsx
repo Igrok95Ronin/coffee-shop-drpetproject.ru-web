@@ -12,7 +12,7 @@ import "./Home.scss";
 function Home({ isAuth, products, setProducts }) {
   // Используем хук (по умолчанию 24)
   const { data, loading, loadingMore, hasMore, fetchMore } = useFetchProducts(24);
-  console.log(products);
+
   return (
     <section className="home">
       <div className="container">

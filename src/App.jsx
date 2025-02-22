@@ -48,7 +48,7 @@ function MainContent({ setIsAuth, userRole, setUserRole, isAuth, products, setPr
           path="/basket"
           element={
             <ProtectedRoute setIsAuth={setIsAuth}>
-              <Basket />
+              <Basket products={products} setProducts={setProducts}/>
             </ProtectedRoute>
           }
         />
