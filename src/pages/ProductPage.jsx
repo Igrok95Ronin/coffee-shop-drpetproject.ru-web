@@ -121,16 +121,6 @@ function ProductPage({ isAuth }) {
               </div>
             </div>
           </div>
-
-          {/* <div className="productPage__right">
-            <div className="productPage__price-card">
-              <h2 className="productPage__price">{data.price} ₽</h2>
-
-              <Button variant="contained" className={data.inBasket ? "home__btnInCard" : "home__btnCard"} size="medium">
-                {data.inBasket ? "В корзине" : "Добавить в корзину"}
-              </Button>
-            </div>
-          </div> */}
         </div>
       </div>
     </section>

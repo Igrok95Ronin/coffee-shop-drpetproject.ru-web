@@ -1,0 +1,53 @@
+.basket {
+  margin-top: 90px;
+
+  &__box {
+    display: grid;
+    grid-template-columns: 1fr 0.4fr;
+    gap: 30px;
+  }
+  &__left,
+  &__right {
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: none;
+    background-color: #fff;
+    min-height: 300px;
+  }
+  &__countProduct {
+    color: #868695;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 10px 0;
+  }
+  &__inner {
+    display: grid;
+    grid-template-columns: 2fr 0.5fr 0.5fr;
+    gap: 20px;
+    padding-top: 20px;
+  }
+  &__contentProduct {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  &__contentPrice {
+    text-align: right;
+    padding: 0 10px;
+  }
+  &__img {
+    width: 96px;
+    aspect-ratio: 0.75;
+    object-fit: contain;
+    outline: 1px solid rgb(224, 213, 213);
+    border-radius: 10px;
+  }
+  &__name {
+    color: #242424;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    font-weight: 600;
+  }
+}

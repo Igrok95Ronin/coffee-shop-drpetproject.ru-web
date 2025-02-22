@@ -75,7 +75,7 @@ function Login({ setIsAuth, setUserRole }) {
       <div className="login-container">
         <h2>Вход</h2>
         <form onSubmit={handleSubmit}>
-          <label>Номер телефона ( 79630581031 ):</label>
+          <label>Номер телефона ( 79320581041 ):</label>
           <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 
           <label>Пароль:</label>

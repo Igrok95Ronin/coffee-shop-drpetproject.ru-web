@@ -35,6 +35,7 @@ function MainContent({ setIsAuth, userRole, setUserRole, isAuth }) {
     location.pathname !== "/register" &&
     location.pathname !== "/login" &&
     location.pathname !== "/search" &&
+    location.pathname !== "/basket" &&
     !location.pathname.startsWith("/product/");
 
   return (
