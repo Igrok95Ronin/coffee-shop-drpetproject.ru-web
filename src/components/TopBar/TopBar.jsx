@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Box, Badge } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -17,7 +17,7 @@ import "./TopBar.scss";
 // Обёртка для Link, которая не передаёт проп "button" в DOM
 const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => <RouterLink ref={ref} {...props} />);
 
-const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout }) => {
+const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout, products }) => {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
@@ -25,18 +25,6 @@ const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout }) => {
   const toggleDrawer = (isOpen) => () => {
     setOpen(isOpen);
   };
-
-  // Обработчик выхода
-  // const handleLogout = async () => {
-  //   try {
-  //     await api.post("/logout");
-  //     setIsAuth(false);
-  //     navigate("/login");
-  //     setOpen(false);
-  //   } catch (err) {
-  //     console.error("Ошибка при логауте:", err);
-  //   }
-  // };
 
   // Обработчик поиска (по нажатию Enter)
   const handleSearchSubmit = (e) => {
@@ -137,7 +125,7 @@ const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout }) => {
 
               {isAuth && (
                 <IconButton color="inherit" component={LinkBehavior} to="/basket" sx={{ ml: 2 }}>
-                  <Badge badgeContent={3} color="error">
+                  <Badge badgeContent={products.length} color="error">
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
@@ -154,6 +142,7 @@ const TopBar = ({ isAuth, setIsAuth, userRole, handleLogout }) => {
         isAuth={isAuth}
         userRole={userRole}
         handleLogout={handleLogout}
+        products={products}
       />
     </>
   );

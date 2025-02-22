@@ -27,7 +27,7 @@ import api from "./api";
 import "./App.scss";
 import Basket from "./pages/Basket";
 
-function MainContent({ setIsAuth, userRole, setUserRole, isAuth }) {
+function MainContent({ setIsAuth, userRole, setUserRole, isAuth, products, setProducts }) {
   const location = useLocation();
 
   // Определяем, должны ли отображаться слайдер
@@ -42,7 +42,7 @@ function MainContent({ setIsAuth, userRole, setUserRole, isAuth }) {
     <main className="main">
       {showImageSlider && <ImageSlider />}
       <Routes>
-        <Route path="/" element={<Home isAuth={isAuth} />} />
+        <Route path="/" element={<Home isAuth={isAuth} products={products} setProducts={setProducts} />} />
         <Route path="/product/:id" element={<ProductPage isAuth={isAuth} />} />
         <Route
           path="/basket"
@@ -57,7 +57,7 @@ function MainContent({ setIsAuth, userRole, setUserRole, isAuth }) {
         <Route path="/payment-and-delivery" element={<PaymentAndDelivery />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/Points" element={<Points />} />
-        <Route path="/Search" element={<Search />} />
+        <Route path="/Search" element={<Search products={products} setProducts={setProducts} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} setUserRole={setUserRole} />} />
 
@@ -98,9 +98,22 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [userRole, setUserRole] = useState(null); // Добавляем состояние для роли
 
+  const [products, setProducts] = useState([]);
+
+  // console.log(products);
+
   useEffect(() => {
     checkAuth();
+    fetchData();
   }, []);
+
+  // Получение данных из таблицы карзины для отображения количества и кнопок
+  const fetchData = async () => {
+    try {
+      const response = await api.get("/basket");
+      setProducts(response.data);
+    } catch (err) {}
+  };
 
   const checkAuth = async () => {
     try {
@@ -133,8 +146,23 @@ function App() {
 
   return (
     <BrowserRouter>
-      <TopBar isAuth={isAuth} setIsAuth={setIsAuth} userRole={userRole} handleLogout={handleLogout} />
-      <MainContent setIsAuth={setIsAuth} userRole={userRole} setUserRole={setUserRole} isAuth={isAuth} />{" "}
+      <TopBar
+        isAuth={isAuth}
+        setIsAuth={setIsAuth}
+        userRole={userRole}
+        handleLogout={handleLogout}
+        products={products}
+        setProducts={setProducts} // ✅ Добавляем setProducts
+      />
+
+      <MainContent
+        setIsAuth={setIsAuth}
+        userRole={userRole}
+        setUserRole={setUserRole}
+        isAuth={isAuth}
+        products={products}
+        setProducts={setProducts} // ✅ Добавляем setProducts
+      />
       {/* ✅ Передаём setUserRole */}
       <Footer />
     </BrowserRouter>

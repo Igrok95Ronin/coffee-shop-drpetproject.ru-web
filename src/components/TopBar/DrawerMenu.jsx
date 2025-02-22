@@ -20,7 +20,7 @@ import "./TopBar.scss";
 // Обёртка для Link, которая не передаёт проп "button" в DOM
 const LinkBehavior = React.forwardRef(({ button, ...props }, ref) => <RouterLink ref={ref} {...props} />);
 
-const DrawerMenu = ({ open, toggleDrawer, isAuth, userRole, handleLogout }) => {
+const DrawerMenu = ({ open, toggleDrawer, isAuth, userRole, handleLogout, products }) => {
   return (
     <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
       <List className="drawer-list">
@@ -88,7 +88,7 @@ const DrawerMenu = ({ open, toggleDrawer, isAuth, userRole, handleLogout }) => {
           <>
             <ListItem button component={LinkBehavior} to="/basket" className="drawer-list-item">
               <ListItemIcon className="drawer-list-item-icon">
-                <Badge badgeContent={3} color="error">
+                <Badge badgeContent={products.length} color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </ListItemIcon>

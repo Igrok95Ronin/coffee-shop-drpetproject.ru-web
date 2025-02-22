@@ -3,10 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, Skeleton } from "@mui/material";
 
+import AddInBasket from "../components/AddInBasket/AddInBasket"; // Добавить товар в корзину
+
 import useSearchProducts from "../hooks/useSearchProducts";
 import "./Search.scss"; // Стили для страницы поиска (по аналогии с search.scss)
 
-function Search() {
+function Search({ products, setProducts }) {
   // Используем кастомный хук:
   // - limit = 24 (можно менять)
   const { data, loading, loadingMore, hasMore, fetchMore, q, total } = useSearchProducts(24);
@@ -49,9 +51,8 @@ function Search() {
                   </CardContent>
                 </Link>
                 <CardActions className="search__btnWrp">
-                  <Button variant="contained" className="search__btnCard" size="small">
-                    В корзину
-                  </Button>
+                  {/* Компонент который вставляет кнопку Добавить в корзину */}
+                  <AddInBasket prod={prod} products={products} setProducts={setProducts} />
                 </CardActions>
               </Card>
             ))}

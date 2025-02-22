@@ -5,12 +5,14 @@ import HelmetMeta from "../components/HelmetMeta/HelmetMeta";
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, Skeleton } from "@mui/material";
 
 import { useFetchProducts } from "../hooks/useFetchProducts"; // <-- Импортируем наш кастомный хук
+import AddInBasket from "../components/AddInBasket/AddInBasket"; // Добавить товар в корзину
+
 import "./Home.scss";
 
-function Home({ isAuth }) {
+function Home({ isAuth, products, setProducts }) {
   // Используем хук (по умолчанию 24)
   const { data, loading, loadingMore, hasMore, fetchMore } = useFetchProducts(24);
-
+  console.log(products);
   return (
     <section className="home">
       <div className="container">
@@ -50,13 +52,8 @@ function Home({ isAuth }) {
               </Link>
               {isAuth && (
                 <CardActions className="home__btnWrp">
-                  <Button
-                    variant="contained"
-                    className={prod.inBasket ? "home__btnInCard" : "home__btnCard"}
-                    size="small"
-                  >
-                    {prod.inBasket ? "В корзине" : "Добавить в корзину"}
-                  </Button>
+                  {/* Компонент который вставляет кнопку Добавить в корзину */}
+                  <AddInBasket prod={prod} products={products} setProducts={setProducts} />
                 </CardActions>
               )}
             </Card>
