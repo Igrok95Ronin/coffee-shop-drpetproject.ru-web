@@ -74,7 +74,7 @@ function Register() {
     }
 
     try {
-      await api.post("http://localhost:8082/send-sms", { phoneNumber: formattedPhone });
+      await api.post("/send-sms", { phoneNumber: formattedPhone });
       setIsSmsDisabled(true);
       setTimeLeft(300); // блокируем повторную отправку на 5 минут
     } catch (error) {
